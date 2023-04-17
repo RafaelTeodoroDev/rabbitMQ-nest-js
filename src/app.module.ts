@@ -7,7 +7,7 @@ import { MailModule } from './infra/mail/mail.module';
   imports: [
     DatabaseModule,
     UsersModule,
-    MailModule
+    MailModule,
   ],
   controllers: [],
   providers: [],

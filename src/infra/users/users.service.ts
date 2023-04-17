@@ -1,15 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Connection, Model } from 'mongoose';
-import { User, UserDocument } from './schemas/user.schema';
+import { Model } from 'mongoose';
 import { Mail } from '../mail/sendEmail.service';
+import { User, UserDocument } from './schemas/user.schema';
+import axios from 'axios';
+
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
-    private mailService: Mail
-  ) {}
+    private mailService: Mail,
+  ) {
+  }
 
   async createUser(name: string, email: string, age: number): Promise<User> {
     const createdUser = new this.userModel({ name, email, age });
@@ -21,13 +24,13 @@ export class UsersService {
       console.log(err)
     }
 
-    //Enviar evento ao coelho
-
     return createdUser.save();
   }
 
-  async findOne(id: string): Promise<User> {
-    return this.userModel.findById(id).populate('avatar').exec();
+  async findOne(id: number): Promise<User> {
+    const { data } = await axios.get(`https://reqres.in/api/users/${id}`)
+
+    return data
   }
 
   async delete(id: string): Promise<User> {
