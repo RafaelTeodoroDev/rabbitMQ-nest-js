@@ -4,12 +4,14 @@ import { Model } from 'mongoose';
 import { Mail } from '../../infra/mail/sendEmail.service';
 import { User, UserDocument } from './schemas/user.schema';
 import axios from 'axios';
+import { MessagingService } from 'src/infra/messaging/messaging.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private mailService: Mail,
+    private readonly messagingService: MessagingService
   ) {}
 
   async createUser(name: string, email: string, age: number): Promise<User> {
@@ -25,6 +27,8 @@ export class UsersService {
       console.log('Failed to send email');
       console.log(err);
     }
+
+    await this.messagingService.sendMessage('data: {}')
 
     return createdUser.save();
   }

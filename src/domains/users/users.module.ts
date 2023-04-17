@@ -7,6 +7,7 @@ import { DatabaseModule } from '../../infra/database/database.module';
 import { MailModule } from '../../infra/mail/mail.module';
 import { FileSchema, File } from '../file/schema/file.schema';
 import { FileService } from '../file/files.service';
+import { MessagingModule } from 'src/infra/messaging/messaging.module';
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -15,6 +16,7 @@ import { FileService } from '../file/files.service';
     ]),
     DatabaseModule,
     MailModule,
+    MessagingModule
   ],
   controllers: [UsersController],
   providers: [UsersService, FileService],
