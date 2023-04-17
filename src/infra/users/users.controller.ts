@@ -3,10 +3,14 @@ import { UsersService } from './users.service';
 import { User } from './schemas/user.schema';
 import { CreateUserDto } from './dtos/createUserDTO';
 import { MessagePattern } from '@nestjs/microservices'
+import { FileService } from '../file/files.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly fileService: FileService
+    ) {}
 
   @MessagePattern('create.user')
   @Post()
@@ -21,8 +25,15 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
-  @Delete(':id')
-  async delete(@Param('id') id: string): Promise<User> {
-    return this.usersService.delete(id);
+  @Get(':id/avatar')
+  async getAvatar(@Param('id') id: number, @Body() body){
+    const { avatarUrl } = body
+    return this.fileService.getAvatarAndSave(id, avatarUrl)
+  }
+
+  @Delete(':id/avatar')
+  async delete(@Param('id') id: number, @Body() body): Promise<void> {
+    const { avatarUrl } = body
+    return this.fileService.delete(id, avatarUrl);
   }
 }

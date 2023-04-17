@@ -5,7 +5,8 @@ import { UsersService } from './users.service';
 import { UserSchema } from './schemas/user.schema';
 import { DatabaseModule } from '../database/database.module';
 import { MailModule } from '../mail/mail.module';
-import { File, FileSchema } from './schemas/file.schema';
+import { FileSchema, File } from '../file/schema/file.schema';
+import { FileService } from '../file/files.service';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }, { name: File.name, schema: FileSchema },]),
@@ -13,6 +14,6 @@ import { File, FileSchema } from './schemas/file.schema';
     MailModule,
   ],
   controllers: [UsersController],
-  providers: [UsersService],
+  providers: [UsersService, FileService],
 })
 export class UsersModule {}
