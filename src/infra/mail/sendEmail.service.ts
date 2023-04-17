@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import * as nodemailer from 'nodemailer'
+import * as nodemailer from 'nodemailer';
 
 @Injectable()
 export class Mail {
-
   async sendEmail(email: string, message: string, subject: string) {
     const transporter = nodemailer.createTransport({
       host: 'sandbox.smtp.mailtrap.io',
@@ -17,7 +16,7 @@ export class Mail {
       from: 'rafaelteodoro2003@gmail.com',
       to: email,
       subject,
-      text: message
+      text: message,
     };
     await transporter.sendMail(mailOptions);
   }
