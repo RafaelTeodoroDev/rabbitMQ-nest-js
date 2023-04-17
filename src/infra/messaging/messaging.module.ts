@@ -9,7 +9,7 @@ import { MessagingService } from './messaging.service';
         name: 'RABBITMQ_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls: [`amqp://${process.env.RABBITMQ_DEFAULT_USER}:${process.env.RABBITMQ_DEFAULT_PASS}@localhost:5672`],
+          urls: [`amqp://guest:guest@localhost:5672`],
           queue: 'users',
           queueOptions: {
             durable: true,

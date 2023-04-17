@@ -8,6 +8,8 @@ export class MessagingService {
   ) {}
 
   async sendMessage(message: string): Promise<void> {
-    await this.client.emit<number>('message', message);
+    await this.client.connect()
+    await this.client.emit<number>('message', Buffer.from(message));
+    console.log("Message sent:", message)
   }
 }
