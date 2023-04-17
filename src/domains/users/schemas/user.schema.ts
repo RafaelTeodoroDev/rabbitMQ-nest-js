@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { FileSchema, File } from 'src/domains/file/schema/file.schema';
 
 @Schema()
 export class User {
@@ -12,9 +11,6 @@ export class User {
 
   @Prop()
   age: number;
-
-  @Prop({ type: FileSchema })
-  avatar: File;
 }
 
 export type UserDocument = User & Document;
