@@ -20,15 +20,15 @@ export class UsersService {
     try {
       await this.mailService.sendEmail(
         email,
-        'Seu usuário foi criado',
-        'Criação de usuário',
+        'User Created',
+        'User Created',
       );
     } catch (err) {
       console.log('Failed to send email');
       console.log(err);
     }
 
-    await this.messagingService.sendMessage('data: {}')
+    await this.messagingService.sendMessage(JSON.stringify(createdUser))
 
     return createdUser.save();
   }

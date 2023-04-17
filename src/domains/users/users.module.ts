@@ -19,6 +19,6 @@ import { MessagingModule } from 'src/infra/messaging/messaging.module';
     MessagingModule
   ],
   controllers: [UsersController],
-  providers: [UsersService, FileService],
+  providers: [UsersService, FileService]
 })
 export class UsersModule {}
